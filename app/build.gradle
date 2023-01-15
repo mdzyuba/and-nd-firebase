@@ -1,20 +1,16 @@
-apply plugin: 'com.android.application'
-
-repositories {
-    mavenLocal()
-    flatDir {
-        dirs 'libs'
-    }
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    namespace "com.google.firebase.udacity.friendlychat"
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.google.firebase.udacity.friendlychat"
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdk 23
+        targetSdk 32
         versionCode 1
         versionName "1.0"
     }
@@ -32,22 +28,24 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support:appcompat-v7:24.2.0'
-
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     // Displaying images
-    compile 'com.github.bumptech.glide:glide:3.6.1'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
 
     // Firebase
-    compile 'com.google.firebase:firebase-database:9.6.0'
-    compile 'com.google.firebase:firebase-auth:9.6.0'
-    compile 'com.google.firebase:firebase-storage:9.6.0'
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-storage'
 
     // FirebaseUI
-    compile 'com.firebaseui:firebase-ui-auth:0.6.0'
-}
+    // Each FirebaseUI library has a transitive dependency on the appropriate
+    // Firebase SDK so there is no need to include those separately in your app.
+    // See https://github.com/firebase/FirebaseUI-Android for more details.
+    // implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
 
-apply plugin: 'com.google.gms.google-services'
+    testImplementation 'junit:junit:4.13.2'
+}
